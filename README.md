@@ -1,5 +1,7 @@
 # Realtime Flagsmith using Pusher
 
+<img src="./recording.gif"/>
+
 ## Install
 ```
 npm i
