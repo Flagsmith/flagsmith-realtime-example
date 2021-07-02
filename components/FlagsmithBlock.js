@@ -18,8 +18,8 @@ const FlagsmithBlock = ({ id }) => {
             cluster: 'eu'
         });
 
-        channel.current = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
+        channel.current = pusher.current.subscribe('my-channel');
+        channel.current.bind('my-event', function(data) {
             alert(JSON.stringify(data));
         });
         flagsmith.current.identify(id)
