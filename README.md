@@ -1,5 +1,8 @@
 # Realtime Flagsmith using Pusher
 
+This project demonstrates how you can use Flagsmith webhooks alongside Pusher to provide realtime feature flag updates for your application.
+
+
 <img src="./recording.gif"/>
 
 ## Install
