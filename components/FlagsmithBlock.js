@@ -15,7 +15,7 @@ const FlagsmithBlock = ({ id }) => {
             }
         })
         pusher.current = new Pusher('7c73f13d1816f4f40cce', {
-            cluster: 'eu'
+            cluster: 'eu',
         });
 
         channel.current = pusher.current.subscribe('my-channel');
