@@ -1,5 +1,6 @@
 import React, {useEffect,useRef,useState} from 'react'; // we need this to make JSX compile
 import { createFlagsmithInstance } from 'flagsmith'
+import env from "../util/env";
 const FlagsmithBlock = ({ id }) => {
     const [lastUpdated, setLastUpdated] = useState(Date.now().valueOf())
     const flagsmith = useRef()
@@ -8,20 +9,17 @@ const FlagsmithBlock = ({ id }) => {
     useEffect(()=>{
         flagsmith.current = createFlagsmithInstance()
         flagsmith.current.init({
-            environmentID:"VmyxnCfVjyrrRZZTt8pD95",
+            environmentID: env.flagsmith,
             preventFetch:true,
             onChange: ()=>{
                 setLastUpdated(Date.now().valueOf());
             }
         })
-        pusher.current = new Pusher('7c73f13d1816f4f40cce', {
+        pusher.current = new Pusher(env.pusher, {
             cluster: 'eu',
         });
-
-        channel.current = pusher.current.subscribe('my-channel');
-        channel.current.bind('my-event', function(data) {
-            flagsmith.current.getFlags();
-        });
+        channel.current = pusher.current.subscribe('flagsmith');
+        channel.current.bind('webhook', ()=> {flagsmith.current.getFlags();});
         flagsmith.current.identify(id)
     },[id])
     const colour = flagsmith.current && flagsmith.current.getValue("colour");
