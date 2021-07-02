@@ -20,7 +20,7 @@ const FlagsmithBlock = ({ id }) => {
 
         channel.current = pusher.current.subscribe('my-channel');
         channel.current.bind('my-event', function(data) {
-            alert(JSON.stringify(data));
+            flagsmith.current.getFlags();
         });
         flagsmith.current.identify(id)
     },[id])
