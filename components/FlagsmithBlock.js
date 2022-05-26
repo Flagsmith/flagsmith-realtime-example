@@ -10,6 +10,7 @@ const FlagsmithBlock = ({ id }) => {
         flagsmith.current = createFlagsmithInstance()
         flagsmith.current.init({
             environmentID: env.flagsmith,
+            api: env.flagsmithAPI,
             preventFetch:true,
             onChange: ()=>{
                 setLastUpdated(Date.now().valueOf());
