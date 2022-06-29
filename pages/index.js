@@ -17,7 +17,9 @@ export default function Home() {
                 cluster: 'eu',
             });
             channel.current = pusher.current.subscribe('flagsmith');
-            channel.current.bind('webhook', ()=> {setTimestamp(new Date().valueOf());});
+            channel.current.bind('webhook', ()=> {
+                setTimestamp(new Date().valueOf());
+            });
         }
 
     },[isReady])
@@ -30,11 +32,7 @@ export default function Home() {
       <Script onLoad={()=>{setReady(true)}} src="https://js.pusher.com/7.0/pusher.min.js"></Script>
         {isReady && (
             <div style={{display:"flex", justifyContent:'center', flexWrap:"wrap"}}>
-                {
-                    new Array(16).fill(0).map((_,v)=>(
-                        <FlagsmithBlock timestamp={timestamp} key={v} id={`test${v+1}`}/>
-                    ))
-                }
+              test
             </div>
         )}
     </div>
