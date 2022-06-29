@@ -1,12 +1,26 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import FlagsmithBlock from "../components/FlagsmithBlock";
 import flagsmith from "flagsmith";
 import Script from 'next/script'
-import {useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
+import env from "../util/env";
+
 export default function Home() {
   const [isReady, setReady] = useState(false)
+    const pusher = useRef()
+    const channel = useRef()
+    const [timestamp, setTimestamp] = useState(new Date().valueOf())
+    useEffect(()=>{
+        if(isReady) {
+            pusher.current = new Pusher(env.pusher, {
+                cluster: 'eu',
+            });
+            channel.current = pusher.current.subscribe('flagsmith');
+            channel.current.bind('webhook', ()=> {setTimestamp(new Date().valueOf());});
+        }
+
+    },[isReady])
   return (
     <div className={styles.container}>
       <Head>
@@ -16,22 +30,12 @@ export default function Home() {
       <Script onLoad={()=>{setReady(true)}} src="https://js.pusher.com/7.0/pusher.min.js"></Script>
         {isReady && (
             <div style={{display:"flex", justifyContent:'center', flexWrap:"wrap"}}>
-                <FlagsmithBlock id="test"/>
-                <FlagsmithBlock id="test2"/>
-                <FlagsmithBlock id="test3"/>
-                <FlagsmithBlock id="test4"/>
-                <FlagsmithBlock id="test5"/>
-                <FlagsmithBlock id="test6"/>
-                <FlagsmithBlock id="test7"/>
-                <FlagsmithBlock id="test8"/>
-                <FlagsmithBlock id="test9"/>
-                <FlagsmithBlock id="test10"/>
-                <FlagsmithBlock id="test11"/>
-                <FlagsmithBlock id="test12"/>
-                <FlagsmithBlock id="test13"/>
-                <FlagsmithBlock id="test14"/>
-                <FlagsmithBlock id="test15"/>
-                <FlagsmithBlock id="test16"/>
+                {
+                    new Array(16).fill(0).map((_,v)=>(
+
+                        <FlagsmithBlock timestamp={timestamp} key={v} id={`test${v+1}`}/>
+                    ))
+                }
             </div>
         )}
     </div>
