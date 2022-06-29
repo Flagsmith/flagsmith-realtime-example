@@ -12,7 +12,7 @@ export default function Home() {
     const channel = useRef()
     const [timestamp, setTimestamp] = useState(new Date().valueOf())
     useEffect(()=>{
-        if(isReady) {
+        if(isReady && !pusher.current && typeof window !== 'undefined') {
             pusher.current = new Pusher(env.pusher, {
                 cluster: 'eu',
             });
@@ -32,7 +32,6 @@ export default function Home() {
             <div style={{display:"flex", justifyContent:'center', flexWrap:"wrap"}}>
                 {
                     new Array(16).fill(0).map((_,v)=>(
-
                         <FlagsmithBlock timestamp={timestamp} key={v} id={`test${v+1}`}/>
                     ))
                 }
