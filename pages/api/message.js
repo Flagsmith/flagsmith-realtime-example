@@ -9,6 +9,7 @@ const pusher = new Pusher({
 });
 
 export default function handler(req, res) {
+  console.log("Webhook Triggered")
   pusher.trigger("flagsmith", "webhook", {})
       .then(()=>{res.status(200).json({ name: 'John Doe' })})
       .catch((e)=>{res.status(500).json({ e:e, name: 'John Doe' })})
