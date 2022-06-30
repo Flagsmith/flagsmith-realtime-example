@@ -8,7 +8,7 @@ const FlagsmithBlock = ({ id, timestamp }) => {
         flagsmith.current = createFlagsmithInstance()
         flagsmith.current.init({
             environmentID: env.flagsmith,
-            api: env.flagsmithAPI,
+            api: "https://api.flagsmith.com/api/v1/",
             preventFetch:true,
             onChange: ()=>{
                 setLastUpdated(Date.now().valueOf());
