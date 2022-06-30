@@ -17,7 +17,7 @@ const FlagsmithBlock = ({ id, timestamp }) => {
         flagsmith.current.identify(id)
     },[id])
     useEffect(()=>{
-        if(flagsmith.identity) {
+        if(flagsmith.current.identity) {
             flagsmith.current.getFlags();
         }
     },[timestamp])
