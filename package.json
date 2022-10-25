@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "flagsmith": "^1.5.1",
+    "flagsmith": "^3.10.5",
     "next": "11.0.1",
     "pusher": "^5.0.0",
     "react": "17.0.2",
