@@ -1,14 +1,16 @@
 import React, {useEffect,useRef,useState} from 'react'; // we need this to make JSX compile
 import { createFlagsmithInstance } from 'flagsmith'
-import env from "../util/env";
-const FlagsmithBlock = ({ id, timestamp }) => {
+
+const environmentID = 'VmyxnCfVjyrrRZZTt8pD95';
+const FlagsmithBlock = ({ id }) => {
     const [_, setLastUpdated] = useState(Date.now().valueOf())
     const flagsmith = useRef()
     useEffect(()=>{
         flagsmith.current = createFlagsmithInstance()
         flagsmith.current.init({
-            environmentID: env.flagsmith,
-            api: "https://api.flagsmith.com/api/v1/",
+            environmentID,
+            realtime: true,
+            enableLogs:true,
             preventFetch:true,
             onChange: ()=>{
                 setLastUpdated(Date.now().valueOf());
@@ -20,7 +22,7 @@ const FlagsmithBlock = ({ id, timestamp }) => {
         if(flagsmith.current.identity) {
             flagsmith.current.getFlags();
         }
-    },[timestamp])
+    },[])
     const colour = flagsmith.current && flagsmith.current.getValue("colour");
     return (
         <div style={{width:200,height:200, display:'flex', alignItems:'center', justifyContent:'center', marginRight:10, marginBottom:10, backgroundColor:colour}}>
