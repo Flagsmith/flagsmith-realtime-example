@@ -2,6 +2,15 @@ import React, {useEffect,useRef,useState} from 'react'; // we need this to make 
 import { createFlagsmithInstance } from 'flagsmith'
 
 const environmentID = 'VmyxnCfVjyrrRZZTt8pD95';
+const baseStyle = {
+    width:200,
+    height:200,
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    marginRight:10,
+    marginBottom:10,
+}
 const FlagsmithBlock = ({ id }) => {
     const [_, setLastUpdated] = useState(Date.now().valueOf())
     const flagsmith = useRef()
@@ -25,7 +34,10 @@ const FlagsmithBlock = ({ id }) => {
     },[])
     const colour = flagsmith.current && flagsmith.current.getValue("colour");
     return (
-        <div style={{width:200,height:200, display:'flex', alignItems:'center', justifyContent:'center', marginRight:10, marginBottom:10, backgroundColor:colour}}>
+        <div style={{
+            ...baseStyle,
+            backgroundColor:colour
+        }}>
             {id}
         </div>
     )
